@@ -15,5 +15,5 @@
 homepage: "https://ayudante.jp/"
 versions:
   # Latest version
-  - sha: 62a8d2480b7c463cc074b706161407a7a925bf10
+  - sha: 50d15ac3ea49f51d5d0234890d82a7cb42a142d2
     changeNotes: Initial release.
