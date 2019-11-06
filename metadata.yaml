@@ -13,6 +13,7 @@
 # limitations under the License.
 
 homepage: "https://ayudante.jp/"
+documentation: "https://ayudante.jp/column/2019-11-06/11-00/"
 versions:
   # Latest version
   - sha: 50d15ac3ea49f51d5d0234890d82a7cb42a142d2
