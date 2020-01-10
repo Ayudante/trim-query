@@ -165,7 +165,7 @@ ___TEMPLATE_PARAMETERS___
 ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 
 // -------- API required
-const log = require('logToConsole');
+// const log = require('logToConsole');
 // data.targetURL: (elementURL | pageURL | pageURLAll | {{variable}})
 // data.query: true
 // data.hash: true
@@ -216,13 +216,11 @@ if(Var !== undefined){
 		query = Var.split('#')[0].split('?').map(function(valQuery, index){
 			return index !== 0 ? valQuery : undefined;
 		}).join('');
-		log('query = ' + query);
 	}
 	if(Var.indexOf('#') >= 0){	// 1st '#' to end
 		hash = Var.split('#').map(function(valQuery, index){
 			return index !== 0 ? valQuery : undefined;
 		}).join('');
-		log('hash = ' + hash);
 	}
 
 	// ---- Target Key query remove
@@ -375,24 +373,6 @@ ___WEB_PERMISSIONS___
     },
     "clientAnnotations": {
       "isEditedByUser": true
-    },
-    "isRequired": true
-  },
-  {
-    "instance": {
-      "key": {
-        "publicId": "logging",
-        "versionId": "1"
-      },
-      "param": [
-        {
-          "key": "environments",
-          "value": {
-            "type": 1,
-            "string": "debug"
-          }
-        }
-      ]
     },
     "isRequired": true
   }
@@ -550,6 +530,6 @@ scenarios:
 
 ___NOTES___
 
-Created on 2020/1/10 20:45:29
+Created on 2020/1/10 20:56:30
 
 
