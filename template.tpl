@@ -130,7 +130,7 @@ ___TEMPLATE_PARAMETERS___
     "simpleTableColumns": [
       {
         "defaultValue": "",
-        "displayName": "Delete query key",
+        "displayName": "Keep query key",
         "name": "query",
         "type": "TEXT",
         "isUnique": true,
@@ -550,6 +550,6 @@ scenarios:
 
 ___NOTES___
 
-Created on 2020/1/10 20:27:38
+Created on 2020/1/10 20:45:29
 
 
