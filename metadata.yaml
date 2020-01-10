@@ -16,7 +16,7 @@ homepage: "https://ayudante.jp/"
 documentation: "https://ayudante.jp/column/2019-11-06/11-00/"
 versions:
   # Latest version
-  - sha: 22580fb5b774379dc657b94a01a72001f5ec967e
+  - sha: 534322aae984e8356a75a8f4ffe886104585900a
     changeNotes: |2
       "Select to delete" has been added to implement a whitelist with the query delete method.
       Supported the URL pattern that the query is included in the hashtag.
