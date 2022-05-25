@@ -79,16 +79,16 @@ ___TEMPLATE_PARAMETERS___
     "macrosInSelect": false,
     "selectItems": [
       {
-        "value": "black",
-        "displayValue": "Black list"
+        "value": "block",
+        "displayValue": "Block list"
       },
       {
-        "value": "white",
-        "displayValue": "White list"
+        "value": "allow",
+        "displayValue": "Allow list"
       }
     ],
     "simpleValueType": true,
-    "defaultValue": "black",
+    "defaultValue": "block",
     "alwaysInSummary": true
   },
   {
@@ -108,19 +108,19 @@ ___TEMPLATE_PARAMETERS___
     "enablingConditions": [
       {
         "paramName": "select",
-        "paramValue": "black",
+        "paramValue": "block",
         "type": "EQUALS"
       }
     ]
   },
   {
     "type": "LABEL",
-    "name": "helpTextBlack",
+    "name": "helpTextBlock",
     "displayName": "The entered \"Delete query key\" is used judge by an exact match (\"equals\"), and if it matches, the key and value are deleted.",
     "enablingConditions": [
       {
         "paramName": "select",
-        "paramValue": "black",
+        "paramValue": "block",
         "type": "EQUALS"
       }
     ]
@@ -142,19 +142,19 @@ ___TEMPLATE_PARAMETERS___
     "enablingConditions": [
       {
         "paramName": "select",
-        "paramValue": "white",
+        "paramValue": "allow",
         "type": "EQUALS"
       }
     ]
   },
   {
     "type": "LABEL",
-    "name": "helpTextWhite",
+    "name": "helpTextAllow",
     "displayName": "The input \"Delete query key\" is determined by an exact match (\"equals\"), otherwise the key and value will be deleted.",
     "enablingConditions": [
       {
         "paramName": "select",
-        "paramValue": "white",
+        "paramValue": "allow",
         "type": "EQUALS"
       }
     ]
@@ -169,16 +169,16 @@ ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 // data.targetURL: (elementURL | pageURL | pageURLAll | {{variable}})
 // data.query: true
 // data.hash: true
-// data.select: black | white
+// data.select: block | allow
 // data.targetQueries: [{"query":"_ga"},{"query":"_gac"}]
 // data.filterQueries: [{"query":"_ga"},{"query":"_gac"}]
 
 // --------- Default Settings
 // ---- Start Setting
 var Var = data.targetURL;					// Target URL
-const select = data.select;					// Select to delete(black | white)
-const delQuery = data.targetQueries;			// Delete query key(black)
-const filterQuery = data.filterQueries;			// Delete query key(white)
+const select = data.select;					// Select to delete(block | allow)
+const delQuery = data.targetQueries;			// Delete query key(block)
+const filterQuery = data.filterQueries;			// Delete query key(allow)
 const delTarget = [data.query, data.hash];	// Remove from what（0:Queries、1:Fragment）
 
 // ---- Get Target URL
@@ -224,7 +224,7 @@ if(Var !== undefined){
 	}
 
 	// ---- Target Key query remove
-	const omit = function(del, target, word){	// Black List
+	const omit = function(del, target, word){	// Block List
 		if(delTarget[del] && target){
 			// Search & destroy
 			//var queries = target.split('&');
@@ -261,7 +261,7 @@ if(Var !== undefined){
 			path += target;
 		}
 	};
-	const filtering = function(del, target, word){	// White list
+	const filtering = function(del, target, word){	// Allow list
 		if(delTarget[del] && target){
 			// Search & destroy
 			if(del == 1 && target.indexOf('?') >= 0){	// Split query
@@ -302,11 +302,11 @@ if(Var !== undefined){
 	};
 
 	switch(select){
-		case 'black':
+		case 'block':
 			omit(0, query, '?');	// Remove from queries.
 			omit(1, hash, '#');	// Remove from fragment.
 			break;
-		case 'white':
+		case 'allow':
 			filtering(0, query, '?');	// Remove from queries.
 			filtering(1, hash, '#');	// Remove from fragment.
 			break;
@@ -382,14 +382,14 @@ ___WEB_PERMISSIONS___
 ___TESTS___
 
 scenarios:
-- name: Basic - Black - query
+- name: Basic - Block - query
   code: |-
     const mockData = {
       // Mocked field values
       targetURL: 'https://example.com/test1/test2/test3/?aaa=111&bbb=222&ccc=333&aaa=444&aaabbbccc=555#hashtagaaa=111&bbb=222&ccc=333&aaa=444&aaabbbccc=555',
       query: true,
       hash: false,
-      select: 'black',
+      select: 'block',
       targetQueries: [{'query': 'aaa'},{'query': 'bbb'}]
     };
 
@@ -398,14 +398,14 @@ scenarios:
 
     // Verify that the variable returns a result.
     assertThat(variableResult).isNotEqualTo(undefined);
-- name: Basic - Black - hash
+- name: Basic - Block - hash
   code: |-
     const mockData = {
       // Mocked field values
       targetURL: 'https://example.com/test1/test2/test3/?aaa=111&bbb=222&ccc=333&aaa=444&aaabbbccc=555#hashtagaaa=111&bbb=222&ccc=333&aaa=444&aaabbbccc=555',
       query: false,
       hash: true,
-      select: 'black',
+      select: 'block',
       targetQueries: [{'query': 'aaa'},{'query': 'bbb'}]
     };
 
@@ -414,14 +414,14 @@ scenarios:
 
     // Verify that the variable returns a result.
     assertThat(variableResult).isNotEqualTo(undefined);
-- name: Basic - Black - query and hash
+- name: Basic - Block - query and hash
   code: |-
     const mockData = {
       // Mocked field values
       targetURL: 'https://example.com/test1/test2/test3/?aaa=111&bbb=222&ccc=333&aaa=444&aaabbbccc=555#hashtagaaa=111&bbb=222&ccc=333&aaa=444&aaabbbccc=555',
       query: true,
       hash: true,
-      select: 'black',
+      select: 'block',
       targetQueries: [{'query': 'aaa'},{'query': 'bbb'}]
     };
 
@@ -430,14 +430,14 @@ scenarios:
 
     // Verify that the variable returns a result.
     assertThat(variableResult).isNotEqualTo(undefined);
-- name: Basic - White - query
+- name: Basic - Allow - query
   code: |-
     const mockData = {
       // Mocked field values
       targetURL: 'https://example.com/test1/test2/test3/?aaa=111&bbb=222&ccc=333&aaa=444&aaabbbccc=555#hashtag',
       query: true,
       hash: false,
-      select: 'white',
+      select: 'allow',
       filterQueries: [{'query': 'aaa'},{'query': 'bbb'}]
     };
 
@@ -446,14 +446,14 @@ scenarios:
 
     // Verify that the variable returns a result.
     assertThat(variableResult).isNotEqualTo(undefined);
-- name: Basic - White - hash
+- name: Basic - Allow - hash
   code: |-
     const mockData = {
       // Mocked field values
       targetURL: 'https://example.com/test1/test2/test3/?aaa=111&bbb=222&ccc=333&aaa=444&aaabbbccc=555#hashtagaaa=111&bbb=222&ccc=333&aaa=444&aaabbbccc=555',
       query: false,
       hash: true,
-      select: 'white',
+      select: 'allow',
       filterQueries: [{'query': 'aaa'},{'query': 'bbb'}]
     };
 
@@ -462,14 +462,14 @@ scenarios:
 
     // Verify that the variable returns a result.
     assertThat(variableResult).isNotEqualTo(undefined);
-- name: Basic - White - query and hash
+- name: Basic - Allow - query and hash
   code: |-
     const mockData = {
       // Mocked field values
       targetURL: 'https://example.com/test1/test2/test3/?aaa=111&bbb=222&ccc=333&aaa=444&aaabbbccc=555#hashtagaaa=111&bbb=222&ccc=333&aaa=444&aaabbbccc=555',
       query: true,
       hash: true,
-      select: 'white',
+      select: 'allow',
       filterQueries: [{'query': 'aaa'},{'query': 'bbb'}]
     };
 
@@ -478,14 +478,14 @@ scenarios:
 
     // Verify that the variable returns a result.
     assertThat(variableResult).isNotEqualTo(undefined);
-- name: Rare - White - query and hash - 2
+- name: Rare - Allow - query and hash - 2
   code: |-
     const mockData = {
       // Mocked field values
       targetURL: 'https://example.com/test1/test2/test3/?aaa=111&bbb=222&ccc=333&aaa=444&aaabbbccc=555#hashtagaaa=111&bbb=222&ccc=333&aaa=444&aaabbbccc=555?test=000&aaa=111',
       query: true,
       hash: true,
-      select: 'white',
+      select: 'allow',
       filterQueries: [{'query': 'aaa'},{'query': 'bbb'}]
     };
 
@@ -494,14 +494,14 @@ scenarios:
 
     // Verify that the variable returns a result.
     assertThat(variableResult).isNotEqualTo(undefined);
-- name: Rare - Black - hash - 2a
+- name: Rare - Block - hash - 2a
   code: |-
     const mockData = {
       // Mocked field values
       targetURL: 'https://example.com/test1/test2/test3/?aaa=111&bbb=222&ccc=333&aaa=444&aaabbbccc=555#hashtagaaa=111&bbb=222&ccc=333&aaa=444&aaabbbccc=555?test=000&aaa=111',
       query: false,
       hash: true,
-      select: 'black',
+      select: 'block',
       targetQueries: [{'query': 'aaa'},{'query': 'bbb'}]
     };
 
@@ -510,14 +510,14 @@ scenarios:
 
     // Verify that the variable returns a result.
     assertThat(variableResult).isNotEqualTo(undefined);
-- name: Rare - Black - hash - 2b
+- name: Rare - Block - hash - 2b
   code: |-
     const mockData = {
       // Mocked field values
       targetURL: 'https://example.com/test1/test2/test3/#hashtagaaa=111&bbb=222&ccc=333&aaa=444&aaabbbccc=555&bbb=tester?test=000&aaa=111&bbb=222&ccc=333',
       query: false,
       hash: true,
-      select: 'black',
+      select: 'block',
       targetQueries: [{'query': 'aaa'},{'query': 'bbb'}]
     };
 
