@@ -20,6 +20,9 @@ It is mainly used to delete unnecessary "_ga" queries when measuring link URL an
 - This template was created by Ayudante, Inc. as the 1st version.
 
 ## Editing history
+### [2024/05/14 (Update)] Ayudante, Inc.
+- Resolved a problem in which the system was not working properly when there were 0 rows to "Delete query key(Black list)" or 0 rows to "Keep query key(White list)".
+
 ### [2020/01/13 (Update)] Ayudante, Inc.
 - "Select to delete" has been added to implement a whitelist with the query delete method.
 - Supported the URL pattern that the query is included in the hashtag.

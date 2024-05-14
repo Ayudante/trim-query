@@ -16,10 +16,12 @@ homepage: "https://ayudante.jp/"
 documentation: "https://ayudante.jp/column/2019-11-06/11-00/"
 versions:
   # Latest version
+  - sha: f5b37fe2eee4c5f07b2ea3854b4adbb402c536a3
+    changeNotes: Resolved a problem in which the system was not working properly when there were 0 rows to "Delete query key(Black list)" or 0 rows to "Keep query key(White list)".
+  # Older versions
   - sha: 534322aae984e8356a75a8f4ffe886104585900a
     changeNotes: |2
       "Select to delete" has been added to implement a whitelist with the query delete method.
       Supported the URL pattern that the query is included in the hashtag.
-  # Older versions
   - sha: 50d15ac3ea49f51d5d0234890d82a7cb42a142d2
     changeNotes: Initial release.
