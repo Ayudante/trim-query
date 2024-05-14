@@ -177,8 +177,8 @@ ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 // ---- Start Setting
 var Var = data.targetURL;					// Target URL
 const select = data.select;					// Select to delete(black | white)
-const delQuery = data.targetQueries;			// Delete query key(black)
-const filterQuery = data.filterQueries;			// Delete query key(white)
+const delQuery = data.targetQueries || [];			// Delete query key(black)
+const filterQuery = data.filterQueries || [];			// Delete query key(white)
 const delTarget = [data.query, data.hash];	// Remove from what（0:Queries、1:Fragment）
 
 // ---- Get Target URL
@@ -330,6 +330,13 @@ ___WEB_PERMISSIONS___
       },
       "param": [
         {
+          "key": "allowedKeys",
+          "value": {
+            "type": 1,
+            "string": "specific"
+          }
+        },
+        {
           "key": "keyPatterns",
           "value": {
             "type": 2,
@@ -450,11 +457,11 @@ scenarios:
   code: |-
     const mockData = {
       // Mocked field values
-      targetURL: 'https://example.com/test1/test2/test3/?aaa=111&bbb=222&ccc=333&aaa=444&aaabbbccc=555#hashtagaaa=111&bbb=222&ccc=333&aaa=444&aaabbbccc=555',
+      targetURL: 'https://example.com/test1/test2/test3/?aaa=111&bbb=222&ccc=333&aaa=444&aaabbbccc=555#hashtagaaa=111&bbb=222&ccc=333&aaa=444&aaabbbccc=555&singlehash',
       query: false,
       hash: true,
       select: 'white',
-      filterQueries: [{'query': 'aaa'},{'query': 'bbb'}]
+      filterQueries: [{'query': 'aaa'},{'query': 'bbb'}, {'query': 'singlehash'}]
     };
 
     // Call runCode to run the template's code.
@@ -519,6 +526,21 @@ scenarios:
       hash: true,
       select: 'black',
       targetQueries: [{'query': 'aaa'},{'query': 'bbb'}]
+    };
+
+    // Call runCode to run the template's code.
+    let variableResult = runCode(mockData);
+
+    // Verify that the variable returns a result.
+    assertThat(variableResult).isNotEqualTo(undefined);
+- name: Basic - White - query - non setting
+  code: |-
+    const mockData = {
+      // Mocked field values
+      targetURL: 'https://example.com/test1/test2/test3/?aaa=111&bbb=222&ccc=333&aaa=444&aaabbbccc=555#hashtag',
+      query: true,
+      hash: false,
+      select: 'white'  // white|black
     };
 
     // Call runCode to run the template's code.
